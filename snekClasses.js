@@ -31,7 +31,14 @@ class Snek {
     draw() {
       ctx.strokeStyle = this.color;
       ctx.beginPath();
-      ctx.rect(this.x, this.y, 40, 40);
+      /* broken
+      var my_gradient=ctx.createLinearGradient(0, 0, 170, 0);
+      my_gradient.addColorStop(0, "black");
+      my_gradient.addColorStop(1, "white");
+      ctx.fillStyle = my_gradient;
+      */
+      ctx.fillStyle = "00ff00";
+      ctx.fillRect(this.x, this.y, 40, 40);
       ctx.stroke();
     }
 
@@ -99,3 +106,4 @@ function keypress(event) {
   snek.draw();
 
 }
+
