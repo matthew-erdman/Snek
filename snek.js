@@ -4,7 +4,7 @@ function play() {
   console.log(snek.y)
 }
 
-document.addEventListener("keydown", myKeyDown);
+document.addEventListener("keydown", keypress);
 ctx = setUpContext();
 snek = new Snek(250, 250, ctx);
 console.log(snek)
