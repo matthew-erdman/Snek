@@ -1,7 +1,7 @@
 class Snek {
     constructor(x, y) {
       this.pos = [x, y];
-      this.color = "#00ff00";
+      this.color = "#00c000";
       this.direction = 0
     }
     get x() {return this.pos[0];}
@@ -29,54 +29,51 @@ class Snek {
     }
 
     draw() {
-      ctx.strokeStyle = this.color;
-      ctx.beginPath();
-      /* broken
-      var my_gradient=ctx.createLinearGradient(0, 0, 170, 0);
-      my_gradient.addColorStop(0, "black");
-      my_gradient.addColorStop(1, "white");
-      ctx.fillStyle = my_gradient;
-      */
-      ctx.fillStyle = "00ff00";
+      //ctx.strokeStyle = this.color;
+      ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, 40, 40);
       ctx.stroke();
     }
 
     move(newDirection) {
       if (newDirection == 0) {
-        this.y -= 41;
+        this.y -= 40;
         this.heading = 0
       }
       else if (newDirection == 1) {
-        this.x += 41;
+        this.x += 40;
         this.heading = 1
       }
       else if (newDirection == 2) {
-        this.y += 41;
+        this.y += 40;
         this.heading = 2
       }
       else if (newDirection == 3) {
-        this.x -= 41;
+        this.x -= 40;
         this.heading = 3
       }
     }
 
     checkPosition() {
-      if (this.x > window.innerWidth - 0 | this.x < 0) {
-        this.pos = [250, 250];
+      if (this.x >= canvas.width | this.x < 0) {
+        this.pos = [160, 160];
+        console.log("X bound respawn")
       }
 
-      else if (this.y > window.innerHeight - 0 | this.y < 0) {
-        this.pos = [250, 250];
+      else if (this.y >= canvas.height | this.y < 0) {
+        this.pos = [160, 160];
+        console.log("Y bound respawn")
       }
     }
 }
 
 function setUpContext() {
-  console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
   canvas = document.getElementById("mainCanvas");
-  canvas.width = window.innerWidth - 20;
-  canvas.height = window.innerHeight - 20;
+  canvas.width = window.innerWidth - (window.innerWidth % 40);
+  canvas.height = window.innerHeight - (window.innerHeight % 40);
+  console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
+  console.log("Canvas is %d by %d", canvas.width, canvas.height);
+
   canvas.style.border = "1px solid black";
 
   ctx = canvas.getContext("2d");
@@ -86,7 +83,6 @@ function setUpContext() {
 function keypress(event) {
   keyCode = event.which;
   keyStr = event.key;
-  console.log(keyStr);
 
   if (keyStr == 'w') {
     snek.move(0);
@@ -100,10 +96,8 @@ function keypress(event) {
   if (keyStr == 'a') {
     snek.move(3);
   }
-
+  console.log(snek.pos);
   snek.checkPosition();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  snek.draw();
 
 }
-

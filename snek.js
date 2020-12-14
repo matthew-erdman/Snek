@@ -1,11 +1,10 @@
 function play() {
+  snek.move(snek.heading);
   snek.draw();
-  console.log(snek.x)
-  console.log(snek.y)
+  window.requestAnimationFrame(play);
 }
 
 document.addEventListener("keydown", keypress);
 ctx = setUpContext();
-snek = new Snek(250, 250, ctx);
-console.log(snek)
+snek = new Snek(160, 160, ctx);
 window.requestAnimationFrame(play);
