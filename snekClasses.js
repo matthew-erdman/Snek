@@ -48,7 +48,7 @@ class Snek {
         this.pos = [160, 160];
         this.direction = 0;
         console.log("Y bound - respawn")
-        playing = false;
+        playing += 1;
       }
     }
 }
@@ -117,6 +117,6 @@ function keypress(event) {
     snek.direction = 3;
   }
   if (keyStr == 'Escape') {
-    playing = false;
+    playing += 1;
   }
 }
