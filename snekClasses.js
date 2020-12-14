@@ -10,61 +10,83 @@ class Snek {
     get y() {return this.pos[1];}
     set y(newY) {this.pos[1] = newY;}
 
-    get heading() {
+    move() {
       if (this.direction == 0) {
-        return "Facing up";
+        this.y -= 40;
       }
       else if (this.direction == 1) {
-        return "Facing right";
+        this.x += 40;
       }
       else if (this.direction == 2) {
-        return "Facing down";
+        this.y += 40;
       }
       else if (this.direction == 3) {
-        return "Facing left";
-      }
-    }
-    set heading(newDirection) {
-      this.direction = newDirection;
-    }
-
-    draw() {
-      //ctx.strokeStyle = this.color;
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, 40, 40);
-      ctx.stroke();
-    }
-
-    move(newDirection) {
-      if (newDirection == 0) {
-        this.y -= 40;
-        this.heading = 0
-      }
-      else if (newDirection == 1) {
-        this.x += 40;
-        this.heading = 1
-      }
-      else if (newDirection == 2) {
-        this.y += 40;
-        this.heading = 2
-      }
-      else if (newDirection == 3) {
         this.x -= 40;
-        this.heading = 3
       }
     }
 
-    checkPosition() {
-      if (this.x >= canvas.width | this.x < 0) {
+    checkBounds() {
+      if (this.x >= canvas.width) {
         this.pos = [160, 160];
-        console.log("X bound respawn")
+        this.direction = 0;
+        console.log("X bound + respawn")
+        playing = false;
       }
-
-      else if (this.y >= canvas.height | this.y < 0) {
+      else if (this.x < 0) {
         this.pos = [160, 160];
-        console.log("Y bound respawn")
+        this.direction = 0;
+        console.log("X bound - respawn")
+        playing = false;
+      }
+      else if (this.y >= canvas.height) {
+        this.pos = [160, 160];
+        this.direction = 0;
+        console.log("Y bound + respawn")
+        playing = false;
+      }
+      else if (this.y < 0) {
+        this.pos = [160, 160];
+        this.direction = 0;
+        console.log("Y bound - respawn")
+        playing = false;
       }
     }
+}
+
+class Apple {
+  constructor() {
+    this.pos = [320, 320];
+    this.color = "#ff0000";
+  }
+
+  get x() {return this.pos[0];}
+  set x(newX) {this.pos[0] = newX;}
+
+  get y() {return this.pos[1];}
+  set y(newY) {this.pos[1] = newY;}
+
+  checkCollision() {
+    console.log(snek.pos, this.pos)
+    if (snek.x == this.x && snek.y == this.y) {
+      console.log("apple")
+      this.spawn();
+    }
+  }
+
+  spawn() {
+    this.x = Math.floor(Math.random() * (canvas.width / 40)) * 40;
+    this.y = Math.floor(Math.random() * (canvas.height / 40)) * 40;
+  }
+}
+
+function drawAll() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = snek.color;
+  ctx.fillRect(snek.x, snek.y, 40, 40);
+  ctx.stroke();
+  ctx.fillStyle = apple.color;
+  ctx.fillRect(apple.x, apple.y, 40, 40);
+  ctx.stroke();
 }
 
 function setUpContext() {
@@ -81,23 +103,20 @@ function setUpContext() {
 }
 
 function keypress(event) {
-  keyCode = event.which;
   keyStr = event.key;
-
   if (keyStr == 'w') {
-    snek.move(0);
+    snek.direction = 0;
   }
   if (keyStr == 'd') {
-    snek.move(1);
+    snek.direction = 1;
   }
   if (keyStr == 's') {
-    snek.move(2);
+    snek.direction = 2;
   }
   if (keyStr == 'a') {
-    snek.move(3);
+    snek.direction = 3;
   }
-  console.log(snek.pos);
-  snek.checkPosition();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  if (keyStr == 'Escape') {
+    playing = false;
+  }
 }
