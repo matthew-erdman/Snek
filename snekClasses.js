@@ -98,6 +98,14 @@ function pause() {
 }
 
 function drawAll() {
+
+  //frames += 1;
+  if (frames % 200 == 0) {
+    now = new Date();
+    msecs = now.getTime() - start.getTime();
+    console.log("fps:", (frames / msecs) * 1000);
+  }
+
   // Clear screen for new frame
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -141,16 +149,16 @@ function keypress(event) {
     console.log("Manual pause triggered");
     pause();
   }
-  else if (keyStr == 'w') {
+  if (keyStr == 'w') {
     snek.dir = 0;
   }
-  else if (keyStr == 'd') {
+  if (keyStr == 'd') {
     snek.dir = 1;
   }
-  else if (keyStr == 's') {
+  if (keyStr == 's') {
     snek.dir = 2;
   }
-  else if (keyStr == 'a') {
+  if (keyStr == 'a') {
     snek.dir = 3;
   }
 }

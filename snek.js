@@ -1,8 +1,11 @@
 function play() {
-	if (playing % 2 == 1) {
-	  snek.move();
-    console.log(snek.pos)
-	  apple.checkCollision();
+  if (playing % 2 == 1) {
+	  frames += 1;
+	  if (frames % 30 == 0) {
+	      snek.move();
+        console.log(snek.pos)
+	      apple.checkCollision();
+	  }
 	  snek.checkBounds();
 	  drawAll();
 	}
@@ -15,6 +18,8 @@ snek = new Snek(canvas.width / 2 - (canvas.width / 2) % 40, canvas.height / 2 - 
 console.log("New snek spawned at " + snek.pos)
 apple = new Apple();
 apple.spawn();
-frames = 0;
 playing = 1;
+var frames = 0;
+var start = new Date();
+var now = new Date();
 window.requestAnimationFrame(play);
