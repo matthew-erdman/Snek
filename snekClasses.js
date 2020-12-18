@@ -114,13 +114,29 @@ class Apple {
   }
 
   spawn() {
-    // Ensure new apple coords are outside of snek head/tail
-    while (snek.tail.includes(JSON.stringify(this.pos)) ||
-     JSON.stringify(this.pos) == JSON.stringify(snek.pos)) {
-
+		var needSpawn = true;
+    while (needSpawn) {
       // Generates random multiple of 40 between 0 and canvas max dimensions
       this.pos = [Math.floor(Math.random() * (canvas.width / 40)) * 40,
          Math.floor(Math.random() * (canvas.height / 40)) * 40];
+
+			// Ensure new apple coords are outside of snek tail
+			if (snek.tail.length > 0) {
+				for (var i in snek.tail) {
+					if (JSON.stringify(this.pos) == JSON.stringify(snek.tail[i])) {
+						break; // Apple is inside snek body
+					}
+				}
+				needSpawn = false; // Apple is not inside snek body
+			}
+			else {
+				needSpawn = false; // There is no snek body
+			}
+
+			// Ensure new apple coords are also outside of snek head
+			if (JSON.stringify(this.pos) == JSON.stringify(snek.pos) || needSpawn) {
+				needSpawn = true; // Apple is inside snek head or body
+			}
     }
 
     console.log("New apple spawned at " + this.pos);

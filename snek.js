@@ -5,8 +5,9 @@ function play() {
   Returns: None, recurses infinitely
 */
 
-  // Only render 1 of every every 20 frames
-  if (playing && frames % 20 == 0) {
+  // Only render 1 of every every 8 frames
+	// NOTE: Every 20 at 144 Hz becomes every 8 assuming 60 Hz
+  if (playing && frames % 8 == 0) {
       snek.move();                            // Move snek
       apple.checkEaten();                     // Is snek on apple?
       snek.checkCollision();                  // Did snek die?
@@ -25,7 +26,7 @@ function play() {
 
   frames += 1;
   window.requestAnimationFrame(play);
-  //NOTE: 144 fps on Windows with 144 Hz main display and ? fps on Mac with 60 Hz display
+  //NOTE: 144 fps on Windows with 144 Hz main display and 60 fps on Mac with 60 Hz display
 }
 
 // ---Init---
