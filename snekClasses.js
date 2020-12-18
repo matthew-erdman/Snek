@@ -3,7 +3,7 @@ class Snek {
       this.pos = [canvas.width / 2 - (canvas.width / 2) % 40, canvas.height / 2 - (canvas.height / 2) % 40];
       this.color = "#00a000";
       this.bodyColor = "#00f000";
-      this.dir = -1; // Prevents movement until first input
+      this.dir = -1; // Stops movement until first input
       this.tail = [];
     }
 
@@ -120,17 +120,15 @@ class Apple {
       this.pos = [Math.floor(Math.random() * (canvas.width / 40)) * 40,
          Math.floor(Math.random() * (canvas.height / 40)) * 40];
 
-			// Ensure new apple coords are outside of snek tail
+			// Ensure new apple coords are outside of snek body
+      needSpawn = false;
 			if (snek.tail.length > 0) {
 				for (var i in snek.tail) {
 					if (JSON.stringify(this.pos) == JSON.stringify(snek.tail[i])) {
-						break; // Apple is inside snek body
+            needSpawn = true; // Apple is inside snek body
+            break;
 					}
 				}
-				needSpawn = false; // Apple is not inside snek body
-			}
-			else {
-				needSpawn = false; // There is no snek body
 			}
 
 			// Ensure new apple coords are also outside of snek head

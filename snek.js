@@ -16,7 +16,7 @@ function play() {
       drawAll();                              // Draw frame
 
       // FPS counter, logs every 10 secs
-      if (frames % 200 == 0) {
+      if (frames % (frameRate * 10) == 0) {
         now = new Date();
         msecs = now.getTime() - start.getTime();
         console.log("fps:", Math.round((frames / msecs) * 1000));
@@ -25,7 +25,7 @@ function play() {
 
   frames += 1;
   window.requestAnimationFrame(play);
-  //NOTE: 144 fps on Windows with 144 Hz main display and 60 fps on Mac with 60 Hz display
+  // NOTE: 144 fps on Windows with 144 Hz main display and 60 fps on Mac with 60 Hz display
 }
 
 // ---Init---
@@ -41,7 +41,7 @@ var start = new Date();
 var now = new Date();
 
 // Global game vars
-var frameRate = 6; // Start only render 1 of every every 6 frames - adjustable ingame
+var frameRate = 6; // Start rendering 1 of every every 6 frames - adjustable ingame
 var playing = false;
 var appleEaten = false;
 var highScore = 0;
