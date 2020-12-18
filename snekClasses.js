@@ -273,7 +273,7 @@ function setUpContext() {
 function keypress(event) {
   /*
     Purpose: Listens for keyboard events for snek movement and game controls
-    Inputs: Keyboard event
+    Inputs: Keyboard event object
     Returns: None
   */
   keyStr = event.key.toLowerCase();  // In case of caps lock
