@@ -18,7 +18,7 @@ class Snek {
       this.tail.push([this.x, this.y]); // Push current head pos to tail "stack"
       /*
       NOTE: pushing 'this.pos' rather than '[this.x, this.y]' causes the value
-      in the tail to always match 'this.pos' (snake head), triggering checkCollision()
+      in the tail to always match 'this.pos' (snek head), triggering checkCollision()
       and loss upon first apple collection. I don't know why using '[this.x, this.y]'
       gets around 'this.pos' changing when they're just set from 'this.pos[0]' and 'this.pos[1]'.
       '[this.x, this.y]' should be identical to 'this.pos' (x/y getter is pulling from pos)
@@ -170,6 +170,7 @@ function pause() {
 
   if (playing) {
     // Draw pause banner
+    ctx.beginPath();
     ctx.fillStyle = "black";
     ctx.font = "40px Cursive";
     ctx.fillText("PAUSED", canvas.width / 2 - 40, canvas.height / 2 - 40);
@@ -255,7 +256,7 @@ function drawAll() {
 
 function setUpContext() {
   /*
-    Purpose: Sets up the canvas parameters for snake
+    Purpose: Sets up the canvas parameters for snek
     Inputs: None
     Returns: Context with set parameters
   */
@@ -313,5 +314,26 @@ function keypress(event) {
   // Left
   else if (keyStr == 'a' && snek.dir != 1) {
     snek.dir = 3;
+  }
+
+  // Options to change framerate
+  // Slow
+  if (keyStr == '1') {
+    frameRate = 20;
+  }
+
+  // Medium - good for 144 Hz
+  else if (keyStr == '2') {
+    frameRate = 14;
+  }
+
+  // Fast - good for 60 Hz
+  else if (keyStr == '3') {
+    frameRate = 6;
+  }
+
+  // Very fast - good for memes
+  else if (keyStr == '9') {
+    frameRate = 2;
   }
 }

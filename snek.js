@@ -5,9 +5,8 @@ function play() {
   Returns: None, recurses infinitely
 */
 
-  // Only render 1 of every every 8 frames
-	// NOTE: Every 20 at 144 Hz becomes every 8 assuming 60 Hz
-  if (playing && frames % 8 == 0) {
+  // Only render 1 out of several frames to control snek speed
+  if (playing && frames % frameRate == 0) {
       snek.move();                            // Move snek
       apple.checkEaten();                     // Is snek on apple?
       snek.checkCollision();                  // Did snek die?
@@ -42,7 +41,8 @@ var start = new Date();
 var now = new Date();
 
 // Global game vars
-var playing = true;
+var frameRate = 6; // Start only render 1 of every every 6 frames - adjustable ingame
+var playing = false;
 var appleEaten = false;
 var highScore = 0;
 
@@ -57,5 +57,24 @@ console.log("New snek spawned at " + snek.pos)
 
 apple.spawn();
 
-// Request first frame and enter game loop
+// Draw instructions
+ctx.fillStyle = snek.color;
+ctx.font = "40px Cursive";
+ctx.fillText("Welcome to snek!", (canvas.width / 2 - 120) - 30, (canvas.height / 2 - 40) - 40);
+ctx.stroke();
+
+ctx.font = "20px Cursive";
+ctx.fillText("Use w/a/s/d to move", canvas.width / 2 - 120, (canvas.height / 2 - 40) + 0);
+ctx.stroke();
+ctx.fillText("Use 1/2/3/9 to adjust game speed", canvas.width / 2 - 120, (canvas.height / 2 - 40) + 30);
+ctx.stroke();
+ctx.fillText("Use esc to pause/unpause", canvas.width / 2 - 120, (canvas.height / 2 - 40) + 60);
+ctx.stroke();
+
+ctx.font = "30px Cursive";
+ctx.fillText("Esc or w/a/s/d to start playing!", (canvas.width / 2 - 120) - 70, (canvas.height / 2 - 40) + 150);
+ctx.stroke();
+
+
+// Request first frame and start main game loop
 window.requestAnimationFrame(play);
